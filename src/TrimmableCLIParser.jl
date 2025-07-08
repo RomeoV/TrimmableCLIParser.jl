@@ -105,8 +105,31 @@ function main(args = ARGS)
         println("Verbose mode is on!")
     end
     println("Processing with port: ", config.port, " and rate: ", config.rate)
+    println(Core.stdout, config)
     return nothing # Return Nothing for a clean JET report
 end
+
+Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
+    cli_schema = (
+        ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
+        ArgSpec.IntOption("--port", "-p", "The port to listen on", Int, 8080),
+        ArgSpec.FloatOption("--rate", "-r", "The processing rate", Float64, 1.5),
+    )
+    config = parse_args(cli_schema, argc, argv)
+
+    if config.verbose
+        println(Core.stdout, "Verbose mode is on!")
+    end
+    println(Core.stdout, "Processing with port: ", config.port, " and rate: ", config.rate)
+    println(Core.stdout, config)
+    foreach(config) do c
+        println(Core.stdout, c);
+        nothing
+    end
+    return 0
+end
+Base.Experimental.entrypoint(main, (Cint, Ptr{Ptr{Cchar}}))
+
 
 # --- JET.jl Analysis example ---
 # @report_opt TrimmableCLIParser.parse_args(TrimmableCLIParser.EXAMPLE_CLI_SCHEMA, TrimmableCLIParser.EXAMPLE_ARGS)
