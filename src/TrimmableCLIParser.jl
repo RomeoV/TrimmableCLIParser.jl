@@ -1,4 +1,4 @@
-# -*- julia-snail-extra-args: "--project=.. -e 'cd(\"..\")'; using Revise"; -*-
+# -*- julia-snail-extra-args: "--project=.. -e 'cd(\"..\"); using Revise, TrimmableCLIParser'"; -*-
 module TrimmableCLIParser
 
 import Moshi.Data: @data
