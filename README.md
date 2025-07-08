@@ -3,9 +3,7 @@
 This is an attempt to create a very simple CLI parser in Julia that's fully type inferrable, so that we can use it for Julia 1.12 trimming.
 It is built on Algebraic Data Types using Moshi.jl.
 
-*Currently, the final type inference for the output type of `parse_args` is still somewhat broken...*
-
-Example Usage:
+### Example Usage:
 
 ``` julia
 using TrimmableCLIParser
@@ -23,4 +21,25 @@ Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
 
     return 0
 end
+```
+
+### Example compilation
+Make sure that julia 1.12 is activated for the current directory:
+
+``` sh
+juliaup override set 1.12
+```
+
+Then just run `make` to build the binary.
+
+### Example usage
+``` sh
+> ./main --verbose
+Verbose mode is on!
+Processing with port 8080
+and rate 1.5
+
+> ./main --port 1000 --rate 0.01
+Processing with port 1000
+and rate 0.01
 ```
