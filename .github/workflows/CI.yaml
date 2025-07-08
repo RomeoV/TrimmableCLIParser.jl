@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Julia
+      uses: julia-actions/setup-julia@v2
+      with:
+        version: '1.12'
+    
+    - name: Build project
+      run: make
+    
+    - name: Test binary execution
+      run: ./main -r 1.0 -v
