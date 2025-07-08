@@ -28,8 +28,8 @@ jobs:
     - name: Measure binary size and execution time
       run: |
         # Get binary size in KB
-        BINARY_SIZE=$(du -k main | cut -f1)
-        echo "Binary size: ${BINARY_SIZE}KB"
+        BINARY_SIZE=$(du -m main | cut -f1)
+        echo "Binary size: ${BINARY_SIZE}MB"
         
         # Measure execution time (average of 5 runs)
         TIMEFORMAT='%3R'
