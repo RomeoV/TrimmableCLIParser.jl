@@ -62,6 +62,13 @@ function parse_args(schema::NTuple{N, ArgSpec.Type} where {N}, args::Vector{Stri
     return NamedTuple{keys}(values)
 end
 
+EXAMPLE_CLI_SCHEMA = (
+    ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
+    ArgSpec.IntOption("--port", "-p", "The port to listen on", Int, 8080),
+    ArgSpec.FloatOption("--rate", "-r", "The processing rate", Float64, 1.5),
+)
+EXAMPLE_ARGS = ["--verbose", "--port", "1234"]
+
 function main(args = ARGS)
     cli_schema = (
         ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
@@ -78,7 +85,7 @@ function main(args = ARGS)
 end
 
 # --- JET.jl Analysis example ---
-# @report_opt main(["-v", "--port", "999"])
+# @report_opt TrimmableCLIParser.parse_args(TrimmableCLIParser.EXAMPLE_CLI_SCHEMA, TrimmableCLIParser.EXAMPLE_ARGS)
 
 if abspath(PROGRAM_FILE) == @__FILE__
     main(ARGS)
