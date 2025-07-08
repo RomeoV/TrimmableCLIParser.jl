@@ -14,6 +14,7 @@ Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
         ArgSpec.Option("--port", "-p", "The port to listen on", OptionValWithDefault.IntVal(8080)),
         ArgSpec.Option("--rate", "-r", "The processing rate", OptionValWithDefault.FloatVal(1.5)),
         ArgSpec.Option("--name", "-r", "Experiment name", OptionValWithDefault.StringVal("exp1")),
+        ArgSpec.Flag("--help", "-h", "Print help"),
     )
     config = parse_args(cli_schema, argc, argv)
 
@@ -23,6 +24,8 @@ Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
     return 0
 end
 ```
+
+Note that the `--help` flag must be explicitly defined if printing help is desired. The code looks for this flag and triggers printing if `--help` is found.
 
 ### Example compilation
 Make sure that julia 1.12 is activated for the current directory:
