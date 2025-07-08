@@ -4,8 +4,10 @@
 [![Binary Size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/binary-size.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
 [![Execution Time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/exec-time.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
 
-This is an attempt to create a very simple CLI parser in Julia that's fully type inferrable, so that we can use it for Julia 1.12 trimming.
-It is built on Algebraic Data Types using Moshi.jl.
+`TrimmableCLIParser.jl` provides a simple CLI parser in Julia that is fully type inferrable so that we can use it for [trimmed binaries](https://docs.julialang.org/en/v1.12-dev/devdocs/sysimg/#Trimming) starting with Julia 1.12.
+Trimmed binaries will have a much reduce memory footprint and startup speed, see for instance the size and startup speed of the example binary in this package reported in the badges above.
+
+This library is built on Algebraic Data Types using [Moshi.jl](https://github.com/Roger-luo/Moshi.jl).
 
 ### Example Usage:
 
