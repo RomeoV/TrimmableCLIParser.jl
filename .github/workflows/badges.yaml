@@ -15,12 +15,22 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Setup Julia
+      uses: julia-actions/setup-julia@v2
+      with:
+        version: '~1.12.0-0'
+    
     - name: Download binary artifact
       uses: actions/download-artifact@v4
       with:
         name: main-binary
         github-token: ${{ secrets.GITHUB_TOKEN }}
         run-id: ${{ github.event.workflow_run.id }}
+
+    - name: Install hyperfine
+      run: |
+        wget https://github.com/sharkdp/hyperfine/releases/download/v1.18.0/hyperfine_1.18.0_amd64.deb
+        sudo dpkg -i hyperfine_1.18.0_amd64.deb
     
     - name: Make binary executable
       run: chmod +x main
@@ -31,20 +41,16 @@ jobs:
         BINARY_SIZE=$(du -m main | cut -f1)
         echo "Binary size: ${BINARY_SIZE}MB"
         
-        # Measure execution time (average of 5 runs)
-        TIMEFORMAT='%3R'
-        total_time=0
-        for i in {1..5}; do
-          exec_time=$(time (./main -r 1.0 > /dev/null 2>&1) 2>&1)
-          total_time=$(echo "$total_time + $exec_time" | bc -l)
-        done
-        avg_time=$(echo "scale=3; $total_time / 5" | bc -l)
-        echo "Average execution time: ${avg_time}s"
+        # Measure execution time with hyperfine
+        hyperfine --export-json timing.json './main -r 1.0'
+        avg_time_ms=$(jq -r '.results[0].mean * 1000' timing.json)
+        avg_time_formatted=$(printf "%.1fms" $avg_time_ms)
+        echo "Average execution time: ${avg_time_formatted}"
         
         # Create badge data
         mkdir -p badge-data
         echo "${BINARY_SIZE}MB" > badge-data/binary-size.txt
-        echo "${avg_time}s" > badge-data/exec-time.txt
+        echo "${avg_time_formatted}" > badge-data/exec-time.txt
         
         # Create JSON for shields.io dynamic badges
         cat > badge-data/binary-size.json << EOF
@@ -60,7 +66,7 @@ jobs:
         {
           "schemaVersion": 1,
           "label": "execution time",
-          "message": "${avg_time}s",
+          "message": "${avg_time_formatted}",
           "color": "green"
         }
         EOF
