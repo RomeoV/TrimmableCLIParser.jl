@@ -1,4 +1,3 @@
-# -*- julia-snail-extra-args: "--project=.. -e 'cd(\"..\"); using Revise, TrimmableCLIParser'"; -*-
 module TrimmableCLIParser
 
 import Moshi.Data: @data
@@ -76,3 +75,7 @@ function parse_args(schema::NTuple{N, ArgSpec.Type} where {N},
 end
 
 end
+
+# Local Variables:
+# julia-snail-extra-args: "--project=.. -e 'cd(\"..\"); using Revise, TrimmableCLIParser'"
+# End:
