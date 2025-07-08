@@ -120,12 +120,8 @@ Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
     if config.verbose
         println(Core.stdout, "Verbose mode is on!")
     end
-    println(Core.stdout, "Processing with port: ", config.port, " and rate: ", config.rate)
-    println(Core.stdout, config)
-    foreach(config) do c
-        println(Core.stdout, c);
-        nothing
-    end
+    println(Core.stdout, "Processing with port $(config.port)")
+    println(Core.stdout, "and rate $(config.rate)")
     return 0
 end
 Base.Experimental.entrypoint(main, (Cint, Ptr{Ptr{Cchar}}))
