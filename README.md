@@ -13,7 +13,7 @@ Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
         ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
         ArgSpec.Option("--port", "-p", "The port to listen on", OptionValWithDefault.IntVal(8080)),
         ArgSpec.Option("--rate", "-r", "The processing rate", OptionValWithDefault.FloatVal(1.5)),
-        ArgSpec.Option("--name", "-r", "Experiment name", OptionValWithDefault.StringVal("exp1")),
+        ArgSpec.Option("--name", "-n", "Experiment name", OptionValWithDefault.StringVal("exp1")),
         ArgSpec.Flag("--help", "-h", "Print help"),
     )
     config = parse_args(cli_schema, argc, argv)
