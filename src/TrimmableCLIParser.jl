@@ -56,6 +56,14 @@ function parse_one_spec(spec::ArgSpec.Type, args::Vector{String})
     end
 end
 
+
+function parse_args(schema::NTuple{N, ArgSpec.Type} where {N}, argc::Cint, argv::Ptr{Ptr{Cchar}})
+    args = unsafe_string.(
+        [unsafe_load(argv, i) for i in 1:argc]
+    )
+    parse_args(schema, args)
+end
+
 function parse_args(schema::NTuple{N, ArgSpec.Type} where {N}, args::Vector{String} = ARGS)
     keys = map(s -> Symbol(replace(s.long, "--" => "")), schema)
     values = map(s -> parse_one_spec(s, args), schema)
