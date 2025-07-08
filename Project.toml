@@ -1,5 +1,8 @@
 name = "TrimmableCLIParser"
 uuid = "eb37013a-f909-4186-9192-84a6bb10c275"
+authors = ["Romeo Valentin (romeov@stanford.edu)"]
+version = "0.1.0"
 
 [deps]
 Moshi = "2e0e35c7-a2e4-4343-998d-7ef72827ed2d"
+julia = "^1.12"
