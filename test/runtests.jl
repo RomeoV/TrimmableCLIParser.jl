@@ -23,7 +23,11 @@ const TEST_ARGS = ["--verbose", "--port", "1234", "--rate", "2.0"]
         
         # Test with default ARGS
         println("Testing parse_args with default ARGS...")
-        @test_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA)
+        argc = Cint(length(TEST_ARGS))
+        argv = pointer([
+            pointer(Base.unsafe_convert(Cstring, arg))
+            for arg in TEST_ARGS])
+        @test_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA, argc, argv)
         
         println("✓ All JET.jl checks passed!")
     end
