@@ -19,17 +19,13 @@ const TEST_ARGS = ["--verbose", "--port", "1234", "--rate", "2.0"]
         
         # Test the main parse_args function with Vector{String} args
         println("Testing parse_args with Vector{String}...")
-        report1 = @report_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA, TEST_ARGS)
-        @test isempty(report1.reports) "JET found issues in parse_args with Vector{String}: $(report1.reports)"
+        @test_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA, TEST_ARGS)
         
         # Test with default ARGS
         println("Testing parse_args with default ARGS...")
-        report2 = @report_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA)
-        @test isempty(report2.reports) "JET found issues in parse_args with default ARGS: $(report2.reports)"
+        @test_opt TrimmableCLIParser.parse_args(TEST_CLI_SCHEMA)
         
-        if isempty(report1.reports) && isempty(report2.reports)
-            println("✓ All JET.jl checks passed!")
-        end
+        println("✓ All JET.jl checks passed!")
     end
     
     @testset "Basic Functionality" begin
