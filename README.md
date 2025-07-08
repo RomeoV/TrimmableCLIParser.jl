@@ -1,8 +1,8 @@
 # TrimmableCLIParser.jl
 
 [![CI](https://github.com/RomeoV/TrimmableCLIParser.jl/workflows/CI/badge.svg)](https://github.com/RomeoV/TrimmableCLIParser.jl/actions)
-[![Binary Size](https://img.shields.io/endpoint?url=https://RomeoV.github.io/TrimmableCLIParser.jl/badges/binary-size.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
-[![Execution Time](https://img.shields.io/endpoint?url=https://RomeoV.github.io/TrimmableCLIParser.jl/badges/exec-time.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
+[![Binary Size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/binary-size.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
+[![Execution Time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/exec-time.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
 
 This is an attempt to create a very simple CLI parser in Julia that's fully type inferrable, so that we can use it for Julia 1.12 trimming.
 It is built on Algebraic Data Types using Moshi.jl.
