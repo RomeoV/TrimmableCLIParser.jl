@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "execution time",
-  "message": "{avg_time}s",
+  "message": "31.1ms",
   "color": "green"
 }
