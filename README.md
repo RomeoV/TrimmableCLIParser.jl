@@ -1,6 +1,7 @@
 # TrimmableCLIParser.jl
 
 [![CI](https://github.com/RomeoV/TrimmableCLIParser.jl/workflows/CI/badge.svg)](https://github.com/RomeoV/TrimmableCLIParser.jl/actions)
+[![JET](https://img.shields.io/badge/%F0%9F%9B%A9%EF%B8%8F_tested_with-JET.jl-233f9a)](https://github.com/aviatesk/JET.jl)
 [![Binary Size](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/binary-size.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
 [![Execution Time](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/RomeoV/TrimmableCLIParser.jl/gh-pages/badges/exec-time.json)](https://github.com/RomeoV/TrimmableCLIParser.jl)
 
