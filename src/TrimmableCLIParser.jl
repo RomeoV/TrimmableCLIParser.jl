@@ -4,6 +4,8 @@ module TrimmableCLIParser
 import Moshi.Data: @data
 import Moshi.Match: @match
 
+public parse_args, ArgSpec
+
 @data ArgSpec begin
     struct Flag
         long::String
