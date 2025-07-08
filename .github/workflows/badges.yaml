@@ -27,7 +27,7 @@ jobs:
     
     - name: Measure binary size and execution time
       run: |
-        # Get binary size in KB
+        # Get binary size in MB
         BINARY_SIZE=$(du -m main | cut -f1)
         echo "Binary size: ${BINARY_SIZE}MB"
         
@@ -43,7 +43,7 @@ jobs:
         
         # Create badge data
         mkdir -p badge-data
-        echo "${BINARY_SIZE}KB" > badge-data/binary-size.txt
+        echo "${BINARY_SIZE}MB" > badge-data/binary-size.txt
         echo "${avg_time}s" > badge-data/exec-time.txt
         
         # Create JSON for shields.io dynamic badges
@@ -51,7 +51,7 @@ jobs:
         {
           "schemaVersion": 1,
           "label": "binary size",
-          "message": "${BINARY_SIZE}KB",
+          "message": "${BINARY_SIZE}MB",
           "color": "blue"
         }
         EOF
@@ -66,7 +66,7 @@ jobs:
         EOF
     
     - name: Deploy badge data to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./badge-data
