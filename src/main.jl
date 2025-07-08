@@ -4,6 +4,8 @@ const EXAMPLE_CLI_SCHEMA = (
     ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
     ArgSpec.Option("--port", "-p", "The port to listen on", OptionValWithDefault.IntVal(8080)),
     ArgSpec.Option("--rate", "-r", "The processing rate", OptionValWithDefault.FloatVal(1.5)),
+    ArgSpec.Option("--name", "-n", "Experiment name", OptionValWithDefault.StringVal("exp1")),
+    ArgSpec.Flag("--help", "-h", "Print help"),
 )
 const EXAMPLE_ARGS = ["--verbose", "--port", "1234"]
 

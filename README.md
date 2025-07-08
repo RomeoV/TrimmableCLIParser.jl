@@ -43,4 +43,17 @@ and rate 1.5
 > ./main --port 1000 --rate 0.01
 Processing with port 1000
 and rate 0.01
+
+> ./main --help
+Options:
+  -v, --verbose
+      Enable verbose logging
+  -p, --port
+      The port to listen on (default: 8080)
+  -r, --rate
+      The processing rate (default: 1.5)
+  -n, --name
+      Experiment name (default: exp1)
+  -h, --help
+      Print help
 ```
