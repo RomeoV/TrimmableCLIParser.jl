@@ -63,15 +63,46 @@ function parse_args(schema::NTuple{N, ArgSpec.Type} where {N},
 end
 
 """
+    print_help(schema)
+
+Print help information for all arguments in the schema.
+"""
+function print_help(schema::NTuple{N, ArgSpec.Type} where {N})
+    println(Core.stdout, "Options:")
+    for spec in schema
+        @match spec begin
+            ArgSpec.Flag(long, short, help) => begin
+                println(Core.stdout, "  $short, $long")
+                println(Core.stdout, "      $help")
+            end
+            ArgSpec.Option(long, short, help, optionval) => begin
+                default_val = getdefault(optionval)
+                println(Core.stdout, "  $short, $long")
+                println(Core.stdout, "      $help (default: $default_val)")
+            end
+        end
+    end
+end
+
+"""
     parse_args(schema, args)
 
 Main entry point. Statically infers key names and value types, and returns a named tuple.
+If the result contains a `help` field set to `true`, prints help and exits.
 """
 function parse_args(schema::NTuple{N, ArgSpec.Type} where {N},
                     args::Vector{<:AbstractString} = ARGS)
     keys = map(s -> Symbol(replace(s.long, "--" => "")), schema)
     values = map(s -> parse_one_spec(s, args), schema)
-    return NamedTuple{keys}(values)
+    result = NamedTuple{keys}(values)
+    
+    # Check if help was requested
+    if haskey(result, :help) && result.help
+        print_help(schema)
+        exit(0)
+    end
+    
+    return result
 end
 
 end
