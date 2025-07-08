@@ -1,0 +1,74 @@
+name: Update Badges
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches: [master]
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download binary artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: main-binary
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        run-id: ${{ github.event.workflow_run.id }}
+    
+    - name: Make binary executable
+      run: chmod +x main
+    
+    - name: Measure binary size and execution time
+      run: |
+        # Get binary size in KB
+        BINARY_SIZE=$(du -k main | cut -f1)
+        echo "Binary size: ${BINARY_SIZE}KB"
+        
+        # Measure execution time (average of 5 runs)
+        TIMEFORMAT='%3R'
+        total_time=0
+        for i in {1..5}; do
+          exec_time=$(time (./main -r 1.0 > /dev/null 2>&1) 2>&1)
+          total_time=$(echo "$total_time + $exec_time" | bc -l)
+        done
+        avg_time=$(echo "scale=3; $total_time / 5" | bc -l)
+        echo "Average execution time: ${avg_time}s"
+        
+        # Create badge data
+        mkdir -p badge-data
+        echo "${BINARY_SIZE}KB" > badge-data/binary-size.txt
+        echo "${avg_time}s" > badge-data/exec-time.txt
+        
+        # Create JSON for shields.io dynamic badges
+        cat > badge-data/binary-size.json << EOF
+        {
+          "schemaVersion": 1,
+          "label": "binary size",
+          "message": "${BINARY_SIZE}KB",
+          "color": "blue"
+        }
+        EOF
+        
+        cat > badge-data/exec-time.json << EOF
+        {
+          "schemaVersion": 1,
+          "label": "execution time",
+          "message": "${avg_time}s",
+          "color": "green"
+        }
+        EOF
+    
+    - name: Deploy badge data to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./badge-data
+        publish_branch: gh-pages
+        destination_dir: badges
