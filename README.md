@@ -11,8 +11,9 @@ using TrimmableCLIParser
 Base.@ccallable function main(argc::Cint, argv::Ptr{Ptr{Cchar}})::Cint
     cli_schema = (
         ArgSpec.Flag("--verbose", "-v", "Enable verbose logging"),
-        ArgSpec.IntOption("--port", "-p", "The port to listen on", Int, 8080),
-        ArgSpec.FloatOption("--rate", "-r", "The processing rate", Float64, 1.5),
+        ArgSpec.Option("--port", "-p", "The port to listen on", OptionValWithDefault.IntVal(8080)),
+        ArgSpec.Option("--rate", "-r", "The processing rate", OptionValWithDefault.FloatVal(1.5)),
+        ArgSpec.Option("--name", "-r", "Experiment name", OptionValWithDefault.StringVal("exp1")),
     )
     config = parse_args(cli_schema, argc, argv)
 
