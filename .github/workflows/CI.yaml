@@ -22,5 +22,8 @@ jobs:
     - name: Build project
       run: make
     
+    - name: Run Julia tests
+      run: julia --project=. -e 'using Pkg; Pkg.test()'
+    
     - name: Test binary execution
       run: ./main -r 1.0 -v
