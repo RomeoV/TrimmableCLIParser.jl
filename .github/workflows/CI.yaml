@@ -16,14 +16,12 @@ jobs:
     - name: Setup Julia
       uses: julia-actions/setup-julia@v2
       with:
-        version: '^1.12.0-0'
+        version: '~1.12.0-0'
         include-prereleases: true
+
+    - uses: julia-actions/cache@v2
+    - uses: julia-actions/julia-buildpkg@v1
+    - uses: julia-actions/julia-runtest@v1
     
-    - name: Build project
-      run: make
-    
-    - name: Run Julia tests
-      run: julia --project=. -e 'using Pkg; Pkg.test()'
-    
-    - name: Test binary execution
-      run: ./main -r 1.0 -v
+    - name: Build trimmed binary and run
+      run: make && ./main -r 1.0 -v
