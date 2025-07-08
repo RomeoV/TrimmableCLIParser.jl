@@ -12,7 +12,7 @@ Manifest.toml: Project.toml
 	@touch $@ # Pkg.instantiate doesn't update the mtime if there are no changes
 
 clean:
-	-rm -f main Manifest.toml
+	-rm -f main
 
 check-julia:
 	@if ! $(JULIA) --help-hidden | grep -s -q 'trim'; then \
