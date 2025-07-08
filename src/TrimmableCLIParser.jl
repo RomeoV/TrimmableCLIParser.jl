@@ -42,12 +42,26 @@ function parse_one_spec(spec::ArgSpec.Type, args::Vector{String})
     idx = findfirst(a -> a == spec.long || a == spec.short, args)
     return @match spec begin
         ArgSpec.Flag(_, _, _) => !isnothing(idx)
-        (
-            ArgSpec.IntOption(_, _, _, T, default)
-                || ArgSpec.FloatOption(_, _, _, T, default)
-                || ArgSpec.StringOption(_, _, _, T, default)
-        ) => begin
-            isnothing(idx) && return spec.default
+        ArgSpec.IntOption(_, _, _, T, default) => begin
+            isnothing(idx) && return default
+            #
+            if (idx + 1) > length(args)
+                error("Argument $(spec.long) requires a value.")
+            end
+            val_str = args[idx + 1]
+            return maybeparse(T, val_str)
+        end
+        ArgSpec.FloatOption(_, _, _, T, default) => begin
+            isnothing(idx) && return default
+            #
+            if (idx + 1) > length(args)
+                error("Argument $(spec.long) requires a value.")
+            end
+            val_str = args[idx + 1]
+            return maybeparse(T, val_str)
+        end
+        ArgSpec.StringOption(_, _, _, T, default) => begin
+            isnothing(idx) && return default
             #
             if (idx + 1) > length(args)
                 error("Argument $(spec.long) requires a value.")
