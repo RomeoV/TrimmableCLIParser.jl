@@ -2,9 +2,9 @@
 JULIA ?= $(shell which julia)
 JULIAC ?= $(shell $(JULIA) -e 'print(normpath(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia", "juliac.jl")))')
 
-RUNIC_FILES := $(wildcard ./src/*.jl) ./Project.toml
+RUNIC_FILES := $(wildcard ./src/*.jl)
 
-main: src/main.jl Project.toml Manifest.toml $(RUNIC_FILES) check-julia
+main: ./src/main.jl Project.toml Manifest.toml $(RUNIC_FILES)
 	$(JULIA) --project=. $(JULIAC) --verbose --output-exe $@ --experimental --trim=unsafe-warn $<
 
 Manifest.toml: Project.toml
